@@ -34,4 +34,4 @@ def get_vm_layout(vm):
     :returns: layout (html.Div or None)
     """
     tests = get_tests_names_of_vm(vm)
-    return get_test_summarizing_layout(tests, vm, '/vms?vm=' + vm)
+    return get_test_summarizing_layout(tests, vm, '/vms?vm=' + vm, vm=vm)

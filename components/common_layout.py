@@ -62,7 +62,7 @@ def get_three_columns_layout(col1, col2, col3):
     ])
 
 
-def get_test_summarizing_layout(tests, left_col_name, href):
+def get_test_summarizing_layout(tests, left_col_name, href, vm='%'):
     """
     Gets a three column layout there the first column contains all tests
     passed indicator and the name of this set of tests. The middle column
@@ -77,7 +77,7 @@ def get_test_summarizing_layout(tests, left_col_name, href):
     # If there are no tests, return nothing
     if len(tests) == 0:
         return None
-    passed, failed = summarize_tests(tests)
+    passed, failed = summarize_tests(tests, vm=vm)
     # Create left column
     left_column = [get_indicator(failed == 0),
                    html.Div(left_col_name, className='big-text')]

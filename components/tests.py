@@ -1,3 +1,4 @@
+from itertools import repeat
 from datetime import datetime
 from components.sql import WriteCursor, Cursor, flatten_results
 
@@ -114,7 +115,7 @@ def get_last_test(test, vm='%'):
             'output': output, 'date': date, 'vm': vm}
 
 
-def summarize_tests(tests):
+def summarize_tests(tests, vm='%'):
     """
     Summarises a list of tests by looking up the results of their last
     execution and returning the number of (completely) passed and failed
@@ -124,7 +125,8 @@ def summarize_tests(tests):
     :returns: number of passed & failed tests (pair of ints, e.g. 5, 0)
     """
     # Get the tests' results
-    results = list(filter(None, map(get_last_test, tests)))
+    vm = repeat(vm, len(tests))
+    results = list(filter(None, map(get_last_test, tests, vm)))
     # Extract how many of them did not fail any check -> passed tests
     passed = len(list(filter(lambda x: x['failed'] == 0, results)))
     # The number of failed tests is (# of all tests) - (# of passed tests)

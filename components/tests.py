@@ -13,7 +13,7 @@ def get_all_weeks():
               where exists (
                   select * from run_on
                   where weeks.test = run_on.test)
-              order by week, week_num;"""
+              order by week;"""
         c.execute(sql)
         weeks = c.fetchall()
     # Flatten list, e.g. from ((1), (2)) to [1,2]

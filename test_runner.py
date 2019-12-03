@@ -60,7 +60,7 @@ def parse_output(output, returncode):
     :param output: the test output (string)
     :param returncode: the test's returncode (int)
     :returns: number of tests passed, number of tests failed
-    """ 
+    """
     # If test has failed before the test summary, return dummy values
     if returncode != 0 or not check_output(output):
         return 0, 1
@@ -100,7 +100,7 @@ def get_scheduled_tests():
         sql = """select run_on.test, run_on.vm from run_on
                 where exists (
                     select * from test_schedule
-                    where scheduled_for <= now() and run = False
+                    where scheduled_for <= utc_timestamp() and run = False
                 );"""
         c.execute(sql)
         return c.fetchall()
@@ -113,7 +113,7 @@ def set_schedules_run():
     with WriteCursor() as c:
         sql = """update test_schedule
               set run = True
-              where scheduled_for <= now();"""
+              where scheduled_for <= utc_timestamp();"""
         c.execute(sql)
 
 

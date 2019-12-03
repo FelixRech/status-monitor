@@ -49,7 +49,7 @@ def logout():
         session = request.cookies['session']
     with WriteCursor() as c:
         sql = """update sessions
-              set logout = now()
+              set logout = utc_timestamp()
               where id = %s;"""
         c.execute(sql, (session))
 
@@ -70,7 +70,7 @@ def is_authorized():
     session = request.cookies['session']
     # Check whether session exists
     sql = """select * from sessions
-          where expires >= now() and logout >= now() and id = %s;"""
+          where expires >= utc_timestamp() and logout >= utc_timestamp() and id = %s;"""
     with Cursor() as c:
         c.execute(sql, (session))
         session_active = len(c.fetchall()) >= 1

@@ -202,7 +202,7 @@ def scheduled_test_ran_since(date):
     with Cursor() as c:
         sql = """select * from test_schedule
               where scheduled_for >= %s
-              and scheduled_for <= now()
+              and scheduled_for <= utc_timestamp()
               and run = True;"""
         c.execute(sql, (date))
     # If cursor returns entries, tests have been run

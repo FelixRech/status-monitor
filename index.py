@@ -8,7 +8,7 @@ from dash.exceptions import PreventUpdate
 
 from app import app
 from scheduler import loop
-from components import auth
+from components import auth, config
 from apps.topbar import layout as topbar
 from apps import status, status_week, vms, vms_vm, account, login, logout
 
@@ -83,4 +83,4 @@ if __name__ == '__main__':
         scheduler.start()
         print("[Scheduler] Thread creation finished")
     print("[Server] Started/reloaded")
-    app.run_server(debug=True)
+    app.run_server(debug=config.SERVER_DEBUG_MODE, host=config.SERVER_HOST)

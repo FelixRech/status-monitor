@@ -1,5 +1,7 @@
 import pymysql
 
+from components.config import *
+
 
 class Cursor(object):
     """
@@ -12,8 +14,8 @@ class Cursor(object):
             c.execute(read_sql)
     """
 
-    def __init__(self, host='localhost', port='3306',
-                 user='user', password='pw', db='db'):
+    def __init__(self, host=SQL_HOST, port=SQL_PORT, user=SQL_USER,
+                 password=SQL_PASSWORD, db=SQL_DATABASE):
         self.db = pymysql.connect(
             host=host,
             user=user,

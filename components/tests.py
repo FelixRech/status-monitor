@@ -29,11 +29,10 @@ def get_tests_in_week(week):
     :returns: a list of tests (list of strings, e.g. ['dns'])
     """
     with Cursor() as c:
-        sql = """select distinct weeks.test from weeks
+        sql = """select distinct weeks.test from (select * from weeks order by week, week_num) weeks
               inner join run_on on weeks.test = run_on.test
               inner join test_results on weeks.test = test_results.test and run_on.vm = test_results.vm
-              where weeks.week = %s
-              order by test_results.date DESC;"""
+              where weeks.week = %s;"""
         c.execute(sql, (week))
         tests = c.fetchall()
     # Flatten list, e.g. from (('dns'), ('dhcp')) to ['dns', 'dhcp']

@@ -1,0 +1,61 @@
+/* Container where elements are vertically added form left to right */
+
+.two-column-horizontal-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
+    align-items: center;
+    width: 100%;
+}
+
+.three-column-horizontal-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: stretch;
+    align-items: center;
+}
+
+/* Left alignment in horizontal container */
+
+.left-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+/* Center alignment in horizontal container */
+
+.center-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Right alignment in horizontal container */
+
+.right-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+}
+
+/* Center multiple items as rows */
+
+.centered-column {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 10px;
+}
+
+/* Two column layout for weekday and tests container */
+
+.week-container {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    justify-items: auto;
+    align-items: start;
+}

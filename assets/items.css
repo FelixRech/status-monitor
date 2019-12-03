@@ -1,0 +1,94 @@
+/* A box with gray outline and rounded corners */
+
+.box {
+    width: 80%;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 3px;
+}
+
+/* Circle indicator in green */
+
+.indicator-success {
+    margin-right: 25px;
+    height: 25px;
+    width: 25px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Circle indicator in red */
+
+.indicator-failure {
+    margin-right: 25px;
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Clone of h4 but without margin-top & margin-bottom */
+
+.big-text {
+    font-size: 2.6rem;
+    line-height: 1.35;
+    letter-spacing: -.08rem;
+    font-weight: 300;
+}
+
+/* Clone of button but adapted to non-text & with small padding */
+
+.triangle-button {
+    display: inline-block;
+    height: 38px;
+    padding: 0 3px;
+    color: #555;
+    line-height: 38px;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Small triangles for buttons */
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 25px solid #555;
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid #555;
+}
+
+/* Terminal-style div for test output */
+
+.terminal {
+    width: auto;
+    background-color: #fff;
+    padding: 8px 12px;
+    margin-left: 55px;
+    margin-right: 55px;
+    border-left: 5px solid#333;
+    background-color: #bbb;
+    word-wrap: break-word;
+    font-family: monospace;
+    white-space: pre;
+}
+
+/* Container for the test-details like vm and execution date */
+
+.test-details {
+    width: auto;
+    margin-left: 55px;
+    margin-right: 55px;
+}

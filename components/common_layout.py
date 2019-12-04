@@ -95,7 +95,7 @@ def format_date(date):
     """
     Format a datetime.datetime object into natural language.
 
-    Examples: today, yesterday, monday, ...
+    Examples: today, yesterday, last Monday, ...
 
     :param date: datetime.datetime object
     :returns: natural language version (string)
@@ -107,9 +107,9 @@ def format_date(date):
     elif difference == 1:
         day = 'yesterday'
     elif difference < 7:
-        day = date.strftime('%A')
+        day = date.strftime('last %A')
     else:
-        day = 'on ' + date.date().strftime('%w.%m.%Y')
+        day = 'on ' + date.date().strftime('%d.%m.%Y')
     return day + ' at ' + date.strftime('%H:%M')
 
 
@@ -133,9 +133,15 @@ def get_test_layout(name, results, id, id_preset):
         children=[html.Div(className='triangle-down')]
     )
     # Create the test output layout
-    details_layout = html.Div(
-        "Executed on {0} {1}".format(results['vm'], date),
-        className='test-details')
+    details_layout = get_three_columns_layout(
+        html.Div(
+            "Executed on {0} {1}".format(results['vm'], date),
+            className='test-details'),
+        html.Div(),
+        dcc.Link("Test history", href='/history', id='history_link',
+                 style={'margin-right': '55px'})
+    )
+
     terminal_layout = html.Div(
         # id='{0}-test-output-{1}'.format(id_preset, id),
         className='terminal',

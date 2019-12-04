@@ -92,3 +92,9 @@
     margin-left: 55px;
     margin-right: 55px;
 }
+
+/* Disable axistext in plot */
+
+.axistext {
+    display: none;
+}

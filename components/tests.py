@@ -77,6 +77,23 @@ def get_tests_of_vm(vm):
         return c.fetchall()
 
 
+def get_vms_of_test(test):
+    """
+    Get all the vms that are associated with a given test.
+    Limited to vms that the test has actually been run on at some point.
+
+    :param vm: the test (string, e.g. 'dns')
+    :returns: list of vms (list of strings, e.g. ['vm01', 'vm02'])
+    """
+    with Cursor() as c:
+        sql = """select distinct test_results.vm from test_results
+              inner join run_on on test_results.vm = run_on.vm and test_results.test = run_on.test
+              where run_on.test = %s
+              order by test_results.vm ASC;"""
+        c.execute(sql, (test))
+        return flatten_results(c.fetchall())
+
+
 def get_tests_names_of_vm(vm):
     """
     Get all the tests that are associated with a given vm.
@@ -113,6 +130,28 @@ def get_last_test(test, vm='%'):
         passed, failed, output, date, vm = row
     return {'passed': passed, 'failed': failed,
             'output': output, 'date': date, 'vm': vm}
+
+
+def get_test_history(test, vm):
+    """
+    Returns all test results of the last week from given test run on given vm.
+
+    :param test: test's name (string, e.g. 'dns')
+    :param vm: vm's name (string, e.g. 'vm01')
+    """
+    with Cursor() as c:
+        sql = """select passed, failed, output, date
+              from test_results
+              where test = %s and vm = %s
+              and date >= subdate(utc_timestamp(), interval 7 day)
+              order by date DESC;"""
+        c.execute(sql, (test, vm))
+        tests = c.fetchall()
+    return {'passed': list(map(lambda x: x[0], tests)),
+            'failed': list(map(lambda x: x[1], tests)),
+            'quota': list(map(lambda x: x[0] / (x[0] + x[1]), tests)),
+            'output': list(map(lambda x: x[2], tests)),
+            'date': list(map(lambda x: x[3], tests))}
 
 
 def summarize_tests(tests, vm='%'):

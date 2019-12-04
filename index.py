@@ -10,7 +10,7 @@ from app import app
 from scheduler import loop
 from components import auth, config
 from apps.topbar import layout as topbar
-from apps import status, status_week, vms, vms_vm, account, login, logout
+from apps import status, status_week, vms, vms_vm, history, account, login, logout
 
 
 app.layout = html.Div([
@@ -65,6 +65,8 @@ def display_page(pathname, search):
         return parse_search(status.layout, search, 'week', status_week.layout)
     elif pathname == '/vms':
         return parse_search(vms.layout, search, 'vm', vms_vm.layout)
+    elif pathname == '/history':
+        return history.layout
     elif pathname == '/account':
         return account.layout
     elif pathname == '/logout':

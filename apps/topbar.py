@@ -11,8 +11,9 @@ from components.common_layout import get_two_columns_layout, get_three_columns_l
 
 
 # Left column of topbar - links to the pages
-page_links = [dcc.Link("Status page", href='/', id='status_link', refresh=False),
-              dcc.Link("VM overview", href='/vms', id='vm_link', refresh=False)]
+page_links = [dcc.Link("Status page", href='/', id='status_link'),
+              dcc.Link("VM overview", href='/vms', id='vm_link'),
+              dcc.Link("Test history", href='/history', id='history_link')]
 
 # Middle column of topbar - next & schedule buttons
 next_button = html.Div(className='center-align', children=[
@@ -29,7 +30,7 @@ schedule_button = html.Div(
 buttons = get_two_columns_layout(next_button, schedule_button)
 
 # Right column of topbar - the link to the account page
-account_link = dcc.Link(href='/account', id='username_link', refresh=False)
+account_link = dcc.Link(href='/account', id='username_link')
 
 
 layout = html.Div(className="topbar", children=[
@@ -39,6 +40,7 @@ layout = html.Div(className="topbar", children=[
 
 @app.callback([Output('status_link', 'className'),
                Output('vm_link', 'className'),
+               Output('history_link', 'className'),
                Output('username_link', 'className')],
               [Input('url', 'pathname')])
 def highlight_current_page(pathname):
@@ -51,13 +53,15 @@ def highlight_current_page(pathname):
     if pathname is None:
         raise PreventUpdate
     elif pathname == '/':
-        return ['active', '', '']
+        return ['active', '', '', '']
     elif pathname == '/vms':
-        return ['', 'active', '']
+        return ['', 'active', '', '']
+    elif pathname == '/history':
+        return ['', '', 'active', '']
     elif pathname == '/account':
-        return ['', '', 'active']
+        return ['', '', '', 'active']
     else:
-        return ['', '', '']
+        return ['', '', '', '']
 
 
 @app.callback(Output('username_link', 'children'),

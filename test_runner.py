@@ -1,3 +1,4 @@
+import threading
 from time import sleep
 from subprocess import run
 from datetime import datetime
@@ -125,9 +126,18 @@ def loop():
         tests = get_scheduled_tests()
         # If there are tests scheduled, execute them and mark them run
         if len(tests) > 0:
-            for test in tests:
-                execute_test(*test)
+            print(("[Test runner] Creating {0} threads for executing tests"
+                   .format(len(tests))))
+            threads = [
+                threading.Thread(
+                    target=execute_test,
+                    args=test) for test in tests]
+            print("[Test runner] Starting threads")
+            [t.start() for t in threads]
+            print("[Test runner] Joining threads")
+            [t.join() for t in threads]
             set_schedules_run()
+            print("[Test runner] Schedule(s) set to run, loop finished")
         # Do not dos database
         sleep(5)
 

@@ -1,3 +1,4 @@
+import pymysql
 import threading
 from time import sleep
 from subprocess import run
@@ -123,15 +124,18 @@ def loop():
     Loops infinitely and executes scheduled tests
     """
     while True:
-        tests = get_scheduled_tests()
+        try:
+            tests = get_scheduled_tests()
+        except pymysql.err.OperationalError as e:
+            print("[Test runner] Connection to database failed: {0}".format(e))
+            sleep(5)
+            continue
         # If there are tests scheduled, execute them and mark them run
         if len(tests) > 0:
             print(("[Test runner] Creating {0} threads for executing tests"
                    .format(len(tests))))
-            threads = [
-                threading.Thread(
-                    target=execute_test,
-                    args=test) for test in tests]
+            threads = [threading.Thread(target=execute_test, args=test)
+                       for test in tests]
             print("[Test runner] Starting threads")
             [t.start() for t in threads]
             print("[Test runner] Joining threads")

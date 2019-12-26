@@ -73,6 +73,9 @@ def setup_database():
         # Add the scheduler user
         sql = """insert ignore into users values ("scheduler", 1, "*");"""
         c.execute(sql)
+        # Add the first admin user (pw is 'password')
+        sql = """insert ignore into users values ("admin", 1, "$2b$12$18DhS2nesCJz2PGMvI9GEeqqymsk.PKh1Mi44giDW95ECNl9wARkC");"""
+        c.execute(sql)
         # Create the table containing the active sessions
         sql = """create table if not exists sessions (
                 username varchar(48),

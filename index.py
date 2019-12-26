@@ -85,4 +85,7 @@ if __name__ == '__main__':
         scheduler.start()
         print("[Scheduler] Thread creation finished")
     print("[Server] Started/reloaded")
-    app.run_server(debug=config.SERVER_DEBUG_MODE, host=config.SERVER_HOST)
+    app.run_server(
+        port=config.SERVER_PORT,
+        debug=config.SERVER_DEBUG_MODE,
+        host=config.SERVER_HOST)

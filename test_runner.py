@@ -140,7 +140,11 @@ def loop():
             [t.start() for t in threads]
             print("[Test runner] Joining threads")
             [t.join() for t in threads]
-            set_schedules_run()
+            try:
+                set_schedules_run()
+            except pymysql.err.OperationalError:
+                print("[Test runner] Connection to database failed while: {0}".format(e))
+                continue
             print("[Test runner] Schedule(s) set to run, loop finished")
         # Do not dos database
         sleep(5)
